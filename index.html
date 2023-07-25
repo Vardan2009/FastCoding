@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedTypers - a web keyboard training game!</title>
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Inter&family=Lora&family=M+PLUS+Rounded+1c:wght@500&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,900&display=swap">
+       <script src="https://kit.fontawesome.com/0449cd7672.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./style/container.css">
+    <link rel="stylesheet" href="./style/keyboard.css">
+    <link rel="stylesheet" href="./style/game.css">
+
+    </head>
+<body>
+    <main>
+        <div class="container" >
+
+            <div id="statistics" class="center fadeincontainer" style="display:none">
+                <h2 class="hoverup">Your <span>Statistics</span></h2>
+                <div style="text-align: left;">
+                <span class="statstext" style="font-size: 30px;" >High Score (Typing)<span id="hscore_stats" style="float: right;opacity:0.5">255</span></span><br>
+                <span class="statstext" style="font-size: 30px;" >Correct Keys (Training)<span id="ckeys_stats" style="float: right;opacity:0.5">255</span></span><br>
+                <span class="statstext" style="font-size: 30px;" >Best Time (Reaction)<span id="besttime_stats" style="float: right;opacity:0.5">255</span></span><br>
+                <span class="statstext" style="font-size: 30px;" >Words Typed<span id="wordstyped_stats" style="float: right;opacity:0.5">255</span></span><br>
+                <span class="statstext" style="font-size: 30px;" >Correct Words<span id="cwords_stats" style="float: right;opacity:0.5">255</span></span><br>
+
+                <span class="statstext" style="font-size: 30px;" >Wrong Words<span id="wwords_stats" style="float: right;opacity:0.5">255</span></span><br>
+
+                <span class="statstext" style="font-size: 30px;" >Seconds in Game<span id="secondsingame_stats" style="float: right;opacity:0.5">255</span></span><br>
+
+               
+            </div>
+            <button onclick="reloadStatistics()" class="faiconbutton_spin"><a href="#" style="color:white;text-decoration: none;"><i class="fa-solid fa-rotate-right" style="color: #ffffff;"></i>Clear Stats</a></button>
+               
+            <button  onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+          </div>
+
+
+            <div id="howtoplay" class="center fadeincontainer" style="display: none;margin:0px;padding: 0px">
+              <h2 style="margin-top: 50px;" class="hoverup">How to <span>Play</span></h2>
+              <button  onclick="prev_howtoplay()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Previous</button>
+              <button  onclick="next_howtoplay()" class="faiconbutton" id="playbutton" type="button">Next<i class="fa-solid fa-chevron-right" style="color: #ffffff;"></i></button>
+              <div class="howtoplay_p fadeincontainer" style="display: block;">
+               
+                <h4 style="font-size: 30px"><strong>Training</strong></h4><br>
+                <h4>This game is about training your hands.<br>A random key on the keyboard will light up, click the key on your keyboard with the matching finger</h4><br>
+                <img width="300px" src="assets/img/HowToPlayScreenshots/training.png"/><br>
+              </div>
+              <div class="howtoplay_p fadeincontainer" style="display: none;">
+                <h4 style="font-size: 30px"><strong>Typing</strong></h4><br>
+              <h4>This game is about writing words as fast as possible<br>Write the word shown on the screen as fast as you can!<br>Every correct word will add +5 seconds to the timer<br>Every wrong one, -5<br>If the timer runs out, the game ends</h4><br>
+              <img width="300px" src="assets/img/HowToPlayScreenshots/typing.png"/><br>
+             
+              </div>
+              <div class="howtoplay_p fadeincontainer" style="display: none;">
+                <h4 style="font-size: 30px"><strong>Listening</strong></h4><br>
+                <br>
+                <h4>This game is very similar to the "typing" game<br>Write the word you hear<br>Same rules from the "Typing" game apply to this game too</h4><br>
+                <br>
+                <img width="300px" src="assets/img/HowToPlayScreenshots/listening.png"/><br>
+                <br>
+                </div>
+                <div class="howtoplay_p fadeincontainer" style="display: none;">
+                  <h4 style="font-size: 30px"><strong>Reaction</strong></h4><br><br>
+                  <h4>This game is a reaction game<br>Click the letters in the alphabetical order to win!</h4><br>
+                  <img width="300px" src="assets/img/HowToPlayScreenshots/reaction.png"/><br>
+                  <br>
+                  </div>
+                  <div class="howtoplay_p fadeincontainer" style="display: none;">
+                      <h4 style="font-size: 30px"><strong>Memory</strong></h4><br><br>
+                      <h4>This game is a memory game<br>Click a box to reveal its letter. Click all the letters with its pairs to win!</h4><br>
+                      <img width="300px" src="assets/img/HowToPlayScreenshots/memory.png"/><br>
+                      <br>
+                      </div>
+             
+              <button  onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-bars" style="color: #ffffff;"></i>Menu</button>
+
+            </div>
+
+            <div id="gameover" class="center fadeincontainer" style="display:none">
+              <h2 class="hoverup">Game <span>Over</span></h2>
+             
+              <button  onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-bars" style="color: #ffffff;"></i>Main Menu</button>
+          </div>
+          <div id="reaction-finish" class="center fadeincontainer" style="display:none">
+            <h2 class="hoverup">Congrats<span>!</span></h2>
+            <h4>You finished the Reaction game in <span id="reaction-results">000</span> seconds!</h4>
+          
+            <button  onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-bars" style="color: #ffffff;"></i>Main Menu</button>
+        </div>
+          <div id="settings" class="center fadeincontainer" style="display:none">
+            <h2 class="hoverup">Settings</h2>
+            <br>
+            <button  class="faiconbutton" onclick="toggleSong()" id="playbutton" type="button"><i id="volumebutton" class="fa-solid fa-volume-off" style="color: #ffffff;"></i>Music</button><br>
+            <br>
+            <h4>Language (Current Language: <span class="language_spec" id="language-specify-settings"></span>)</h4>
+            <br>
+            <div style="display: flex;justify-content: center">
+              <img onclick="changeLang('en')" class="langimg" id="changelang_en" src="assets/lang/en.png">
+              <img onclick="changeLang('am')" class="langimg" id="changelang_am" src="assets/lang/am.png">
+             <!-- <img onclick="changeLang('ru')" class="langimg" id="changelang_ru" src="assets/lang/ru.png">
+              <img onclick="changeLang('de')" class="langimg" id="changelang_de" src="assets/lang/de.png">-->
+              </div>
+            <button  onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+        </div>
+
+
+            <div id="information" class="center fadeincontainer" style="display:none">
+              <h2 class="hoverup">Info</h2>
+              <h4>Created by <span>Vardan Petrosyan</span></h4><br>
+              <h4>for the <span>"Fast Coding"</span> workshop in TUMO</h4><br>
+              <h4 class="faiconbutton"><a href="https://github.com/Vardan2009" style="color:white;text-decoration: none;"><i class="fa-brands fa-github" style="color: #ffffff;"></i>My GitHub</a></h4><br>
+              <h4 class="faiconbutton"><a href="#" style="color:white;text-decoration: none;"><i class="fa-solid fa-code" style="color: #ffffff;"></i>Source Code</a></h4><br>
+              <button  onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+          </div>
+
+
+         
+            <div id="menu" class="center fadeincontainer" style="display: block;">
+              
+             
+                <h2 class="hoverup menutext" >Speed<span>Typers</span></h2>
+                <button class="faiconbutton" onclick="open_p(1)" id="playbutton" type="button"><i class="fa-solid fa-keyboard" style="color: #ffffff;"></i>Start Typing</button>
+                <br>
+                <button class="faiconbutton" onclick="loadStats()" id="playbutton" type="button"><i class="fa-solid fa-signal" style="color: #ffffff;"></i>Your Stats</button>
+                <br>
+                <button class="faiconbutton" onclick="open_p(8)" id="playbutton" type="button"><i class="fa-solid fa-gear" style="color: #ffffff;"></i>Settings</button><br>
+                <button class="faiconbutton" onclick="open_p(5)" id="playbutton" type="button"><i class="fa-solid fa-info" style="color: #ffffff;"></i>Info</button><br>
+               
+            </div> 
+            <div style="width: 100vw;margin: 0px;padding:0px" id="container-bg" class="container-bg fadeincontainer-notranslate">
+           
+            </div>
+            
+            <div id="reaction" class="center fadeincontainer" style="display: none; height: 80vh;">
+              <header style="margin-bottom: 50px;margin-top: 50px;">
+                <div class="your-score">
+                    <p>Your&nbsp;Time</p>
+                    <p>
+                      
+                      <i id="scorelogo" class="fa-solid fa-star" style="color: #ffffff;"></i>
+                        <span id="scoretext-reaction" class="score">0</span>
+                    
+                    </p>
+                </div>
+                <div class="higher-score">
+                    <p>Best&nbsp;Time</p>
+                    <p>
+                      <i class="fa-solid fa-rocket" style="color: #ffffff;"></i>
+                        <span id="hscoretext-reaction" class="high-score"></span>
+                      
+                    </p>
+                </div>
+            </header>
+              
+              <div style="display: flex; justify-content: center; align-items: center; align-content: center;margin:0px;">
+              
+
+              <table id="reaction-table" style="margin:0px;">
+                <tr class="reaction-tr">
+                  <td class="reaction-td">
+                    <button id="reaction_button_A">A</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_B">B</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_C">C</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_D">D</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_E">E</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_F">F</button>
+                  </td>
+                </tr>
+                <tr class="reaction-tr">
+                  <td class="reaction-td">
+                    <button id="reaction_button_G">G</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_H">H</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_I">I</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_J">J</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_K">K</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_L">L</button>
+                  </td>
+                </tr>
+                <tr class="reaction-tr">
+                  <td class="reaction-td">
+                    <button id="reaction_button_M">M</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_N">N</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_O">O</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_P">P</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_Q">Q</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_R">R</button>
+                  </td>
+                </tr>
+                <tr class="reaction-tr">
+                  <td class="reaction-td">
+                    <button id="reaction_button_S">S</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_T">T</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_U">U</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_V">V</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_W">W</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_X">X</button>
+                  </td>
+                </tr>
+                <tr class="reaction-tr">
+                  <td class="reaction-td">
+                    <button id="reaction_button_Y">Y</button>
+                  </td>
+                  <td class="reaction-td">
+                    <button id="reaction_button_Z">Z</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            
+          
+            <button onclick="returnMenu_fromReaction()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button></div>
+
+            <div id="choose" class="choose fadeincontainer" style="display: none">
+                <h3 style="margin-top: 300px" class="hoverup">Typing in <span id="language-specify">Armenian</span></h3>
+                <div style="display: flex; flex-wrap: wrap; align-items: center;
+                justify-content: center;">
+                  <button class="faiconbutton gamebutton" onclick="keyboardGame()" type="button" ><i class="fa-solid fa-dumbbell" style="color: #ffffff;"></i><br>Training<br><img id="language_indicator_training" width="30px" src="assets/lang/am.png"/></button> <br>
+                  <button class="faiconbutton gamebutton" onclick="startTyping()" type="button" ><i class="fa-solid fa-keyboard" style="color: #ffffff;"></i><br>Typing<br><img id="language_indicator_typing" width="30px" src="assets/lang/en.png"/></button> <br>
+                  <button class="faiconbutton gamebutton" onclick="startListening()" type="button" ><i class="fa-solid fa-headphones" style="color: #ffffff;"></i><br>Listening<br><img id="language_indicator_listening" width="30px" src="assets/lang/am.png"/></button> <br>
+                  <button class="faiconbutton gamebutton" onclick="randomizeAlphabet()" id="playbutton" type="button"><i class="fa-regular fa-hand-pointer" style="color: #ffffff;"></i><br>Reaction<br><img id="language_indicator_reaction" width="30px" src="assets/lang/en.png"/></button><br>
+                  <button class="faiconbutton gamebutton" onclick="startMemoryGame()" id="playbutton" type="button"><i class="fa-regular fa-a" style="color: #ffffff;"></i><br>Memory<br><img id="language_indicator_memory" width="30px" src="assets/lang/ru.png"/><br><span class="newtext">New!</span></button><br>
+                </div>
+                <div style="display: flex; width: 100%; justify-content: center">
+                  
+                    <button style="width: 50%" onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+                    <button style="width: 50%" class="faiconbutton" onclick="HowToPlayScreen()" id="playbutton" type="button"><i class="fa-solid fa-question" style="color: #ffffff;"></i>How To Play?</button>
+                </div>
+               
+            </div>
+
+            <div id="memgame" class="fadeincontainer" style="display: none;text-align: center">
+              <button style="width: 50%" onclick="menu_from_memory_game()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+
+              <h3>Round <span id="memgame-round">1</span></h3>
+              <h4><span id="memgame-seconds">1</span> Seconds Remain</h4>
+              <table class="memgametable" id="memgame-table">
+
+              </table>
+            </div>
+            <div id="memgame-win" class="fadeincontainer" style="display: none;text-align: center">
+             
+                <h3>You <span id="memgame-round">Win</span></h3>
+                <h4>You completed all the rounds in the Memory Game!!</h4>
+                <button onclick="menu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-bars" style="color: #ffffff;"></i>Menu</button>
+              </div>
+
+            <div id="count-down" style="display: none">
+                <h1 id="start-count" style="font-size: 150px;">3</h1>
+            </div>
+
+            <figure>
+                <img id="figure-jumping" src="./assets/img/img.png" style="display: none">
+            </figure>
+
+
+
+            <div class="keyboard fadeincontainer" id="keyboard" style="display: none">
+       
+                <h3 style="margin: 0px;">Train your <span>fingers</span></h3>
+                <button style="margin: 40px 0px;" onclick="menuKeyboard()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button> 
+                <ul class="row row-0">
+                  <li class="pinky1" id="esc">՝</li>
+                  <li class="pinky1" id="Digit1">Է</li>
+                  <li class="ring1" id="Digit2">Թ</li>
+                  <li class="middle1" id="Digit3">Փ</li>
+                  <li class="pointer1st selected" id="Digit4">Ձ</li>
+                  <li class="pointer1st hit" id="Digit5">Ջ</li>
+                  <li class="pointer1st" id="Digit6">ւ</li>
+                  <li class="pointer1st" id="Digit7">և</li>
+                  <li class="middle1" id="Digit8">Ր</li>
+                  <li class="ring1" id="Digit9">Չ</li>
+                  <li class="pinky1" id="Digit0">Ճ</li>
+                  <li class="pinky1" id="Minus">-</li>
+                  <li class="pinky1" id="Equal">Ժ</li>
+                  <li class="pinky1" id="back">DEL</li>
+                </ul>
+                <ul class="row row-1">
+                  <li class="pinky1" id="tab">TAB</li>
+                  <li class="pinky1" id="KeyQ">Ք</li>
+                  <li class="ring1" id="KeyW">Ո</li>
+                  <li class="middle1" id="KeyE">Ե</li>
+                  <li class="pointer1st" id="KeyR">Ռ</li>
+                  <li class="pointer1st" id="KeyT">Տ</li>
+                  <li class="pointer1st" id="KeyY">Ը</li>
+                  <li class="pointer1st" id="KeyU">ւ</li>
+                  <li class="middle1" id="KeyI">Ի</li>
+                  <li class="ring1" id="KeyO">Օ</li>
+                  <li class="pinky1" id="KeyP">Պ</li>
+                  <li class="pinky1" id="BracketLeft">Խ</li>
+                  <li class="pinky1" id="BracketRight">Ծ</li>
+                  <li class="pinky1" >՚</li>
+                </ul>
+                <ul class="row row-2">
+                  <li class="pinky1" id="caps">CAPS</li>
+                  <li class="pinky1" id="KeyA">Ա</li>
+                  <li class="ring1" id="KeyS">Ս</li>
+                  <li class="middle1" id="KeyD">Դ</li>
+                  <li class="pointer1st" id="KeyF">Ֆ</li>
+                  <li class="pointer1st" id="KeyG">Գ</li>
+                  <li class="pointer1st" id="KeyH">Հ</li>
+                  <li class="pointer1st" id="KeyJ">Յ</li>
+                  <li class="middle1" id="KeyK">Կ</li>
+                  <li class="ring1" id="KeyL">Լ</li>
+                  <li class="pinky1" id=";">;</li>
+                  <li class="pinky1" id="Quote">Շ</li>
+                  <li class="pinky1" id="enter">RETURN</li>
+                </ul>
+                <ul class="row row-3">
+                  <li class="pinky1" id="left-shift">SHIFT</li>
+                  <li class="pinky1" id="KeyZ">Զ</li>
+                  <li class="ring1" id="KeyX">Ղ</li>
+                  <li class="middle1" id="KeyC">Ց</li>
+                  <li class="pointer1st" id="KeyV">Վ</li>
+                  <li class="pointer1st" id="KeyB">Բ</li>
+                  <li class="pointer1st" id="KeyN">Ն</li>
+                  <li class="pointer1st" id="KeyM">Մ</li>
+                  <li class="middle1" id=",">,</li>
+                  <li class="ring1" id=".">:</li>
+                  <li class="pinky1" id="/">/</li>
+                  <li class="pinky1" id="right-shift">SHIFT</li>
+                </ul>
+                <img height="330px" id="figure-jumping" src="./assets/img/fingers_new.png">
+              </div>
+
+
+
+              <div id="game" class="game fadeincontainer-notranslate-fast" style="display: none">
+                <div class="game-part">
+                  <header>
+                    <div class="your-score">
+                        <p>Your&nbsp;Score</p>
+                        <p>
+                          
+                          <i id="scorelogo" class="fa-solid fa-star" style="color: #ffffff;"></i>
+                            <span id="scoretext" class="score">0</span>
+                        
+                        </p>
+                    </div>
+                    <div class="higher-score">
+                        <p>Best&nbsp;Score</p>
+                        <p>
+                          <i class="fa-solid fa-rocket" style="color: #ffffff;"></i>
+                            <span id="hscoretext" class="high-score"></span>
+                            <h4 style="display: none;" id="hscoreachievedh4" class="fadeincontainer">New Best!</h4>
+                        </p>
+                    </div>
+                </header>
+                    
+                    <div class="word-div" >
+                             <p id="gameword" class = "info-text">AAAAA</p>
+                    </div>
+    
+              <div class="input-box">
+                <input  onpaste="return false;" ondrop="return false;" autocomplete="off"  id="typing" type="text" placeholder="Start typing..."  />
+              </div>
+
+            </div>
+            <div class="time-div">
+              <div class="time-bar-div">
+                <span class="time-bar"></span>
+              </div>
+              <p><span id="time_text" class="time">5</span></p>
+              </div>
+              <button onclick="returnMenu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+          </div>
+
+
+
+
+
+
+
+
+
+          <div id="listening" class="game fadeincontainer-notranslate-fast" style="display: none">
+            <div class="game-part">
+              <header style="display: flex; justify-content: center;">
+                <div class="your-score">
+                    <p>Your&nbsp;Score</p>
+                    <p>
+                      
+                      <i id="scorelogo_listening" class="fa-solid fa-star" style="color: #ffffff;"></i>
+                        <span id="scoretext_listening" class="score">0</span>
+                    
+                    </p>
+                </div>
+              
+            </header>
+                
+                <div class="word-div" >
+                  <audio  id="myAudio" src="assets/sounds/words/am/Ազատ.mp3"></audio>
+                  <button style="width: 100%;" id="playButton"><i class="fa-solid fa-play" style="color: white"></i></button>
+                  <br>
+                  <br>
+                </div>
+
+          <div class="input-box">
+            <input onpaste="return false;" ondrop="return false;" autocomplete="off" id="typing_listening" type="text" placeholder="Start typing..."  />
+          </div>
+
+        </div>
+        <div class="time-div">
+          <div class="time-bar-div">
+            <span class="time-bar"></span>
+          </div>
+          <p><span id="time_text_listening" class="time">5</span></p>
+          </div>
+          <button onclick="returnMenu()" class="faiconbutton" id="playbutton" type="button"><i class="fa-solid fa-chevron-left" style="color: #ffffff;"></i>Back</button>
+      </div>
+
+
+        </div>
+    </main>
+
+
+</body>
+</html>
+
+
+<script src="data/data.js"></script>
+<script src="data/keyboard.js"></script>
+<script src="data/reaction.js"></script>
+<script src="data/memory.js"></script>
+<script src="scripts/script.js"></script>
+
+
