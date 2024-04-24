@@ -524,6 +524,8 @@ buttons.forEach(function(button) {
 
 function reloadStatistics()
 {
+    if(!confirm("Are you sure?")) return;
+    
     localStorage.setItem("typinggame_highscore",0)
     localStorage.setItem("typinggame_wordstyped",0)
     localStorage.setItem("typinggame_besttime_reaction",0)
