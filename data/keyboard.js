@@ -257,12 +257,12 @@ function checkKey(k)
     if(k.code == key)
     {
         localStorage.typinggame_ckeys++;
-        playSound(c);
+        playSound(correctAnswerAudio);
         randomKey();
     }
     else
     {
-        playSound(w);
+        playSound(wrongAnswerAudio);
         playAnim(k.code,"hit",200);
     }
 }

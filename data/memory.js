@@ -137,13 +137,13 @@ function memgame_handle(id,pt)
             document.getElementById(id).innerHTML = pt;
             document.getElementById(id).classList.add("fadeout-reaction");
             selectedEl.classList.add("fadeout-reaction");
-            selectedEl = null; playSound(c);
+            selectedEl = null; playSound(correctAnswerAudio);
             console.log("correct");
             correctCount+=2;
         }
        else {
         console.log("wrong");
-        playSound(w);
+        playSound(wrongAnswerAudio);
         playAnim(id,"wrong-reaction-fadeout",300);
         playAnim(selectedEl.id,"wrong-reaction-fadeout",300);
         document.getElementById(id).innerHTML = pt;

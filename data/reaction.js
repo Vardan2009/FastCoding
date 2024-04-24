@@ -21,9 +21,6 @@ function returnMenu_fromReaction()
 
 function createTable()
 {
-
-
-   
   if(localStorageLanguage=="am")
   {
     alphabet_reaction= alphabet_am;
@@ -73,18 +70,16 @@ function createTable()
 
 
 function randomizeAlphabet() {
-
-
   createTable();
   alphabetButtons = document.querySelectorAll('.reaction-td button');
-    stopMusic()
-    hideWords();
-    open_p(10);
-   seconds_reaction = 0;
-   currentLetterIndex = 0;
-   var shuffledAlphabet = alphabet_reaction.split('').sort(function() { return 0.5 - Math.random(); }).join('');
+  stopMusic()
+  hideWords();
+  open_p(10);
+  seconds_reaction = 0;
+  currentLetterIndex = 0;
+  var shuffledAlphabet = alphabet_reaction.split('').sort(function() { return 0.5 - Math.random(); }).join('');
    
-    for (var i = 0; i < alphabetButtons.length; i++) {
+  for (var i = 0; i < alphabetButtons.length; i++) {
         alphabetButtons[i].classList.remove("fadeout-reaction");
       alphabetButtons[i].innerHTML = shuffledAlphabet[i];
       alphabetButtons[i].onclick = (function(index,element) {
@@ -113,7 +108,7 @@ function randomizeAlphabet() {
    
     console.log(letter)
     if (letter == alphabet_reaction[currentLetterIndex]) {
-        playSound(c);
+        playSound(correctAnswerAudio);
       element.classList.add("fadeout-reaction");
       currentLetterIndex++;
       if (currentLetterIndex === alphabet_reaction.length) {
@@ -131,7 +126,7 @@ function randomizeAlphabet() {
     }
     else
     {
-        playSound(w);
+        playSound(wrongAnswerAudio);
         playAnim(element.id,"wrong-reaction",300)
     }
-  }
+}
